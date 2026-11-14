@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-sky-surface text-ink antialiased dark:bg-night dark:text-slate-100; }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-secondary; }
+  summary::-webkit-details-marker { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
