@@ -7,7 +7,7 @@ export const site = {
 	telegramTarget: 'https://t.me/al1_070',
 	phone: '+998 95 012 80 10',
 	phoneHref: 'tel:+998950128010',
-	email: 'info@aljabr.uz',
+	email: 'shohijahonyusupov1@gmail.com',
 	city: {
 		ru: 'Ташкент, Узбекистан',
 		en: 'Tashkent, Uzbekistan',
