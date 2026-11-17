@@ -1,23 +1,26 @@
-// Brauzer tomonidagi himoya faqat UX/gigiyena uchun. HAQIQIY rate-limit va autentifikatsiya serverda bo'lishi shart.
-const CONTROL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g
-
-export const sanitizeText = (v: string, max = 1000): string =>
-  v.replace(CONTROL, '').replace(/[<>]/g, '').trim().slice(0, max)
-
-export const isValidPhone = (v: string): boolean => /^\+?[0-9\s()-]{9,18}$/.test(v.trim())
-
-export const isSafeExternalUrl = (u: string): boolean => {
-  try { return ['https:', 'tel:', 'mailto:'].includes(new URL(u).protocol) } catch { return false }
+export const isValidPhone = (v: string): boolean => {
+	if (!/^\+?[0-9\s()-]+$/.test(v.trim())) return false
+	const digits = v.replace(/\D/g, '').length
+	return digits >= 9 && digits <= 15
 }
 
-/** Takroriy yuborishni sekinlatuvchi mijoz tomonidagi throttle (xavfsizlik chegarasi EMAS). */
-export function createThrottle(max: number, windowMs: number) {
-  const hits: number[] = []
-  return (): boolean => {
-    const now = Date.now()
-    while (hits.length && now - hits[0] > windowMs) hits.shift()
-    if (hits.length >= max) return false
-    hits.push(now)
-    return true
-  }
+/** Matnni tozalaydi: boshqaruv belgilari va <> olib tashlanadi, uzunlik cheklanadi. */
+export const sanitizeText = (v: string, max: number): string =>
+	v
+		// eslint-disable-next-line no-control-regex
+		.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F<>]/g, '')
+		.replace(/[ \t]+/g, ' ')
+		.trim()
+		.slice(0, max)
+
+/** Brauzer tomonida oddiy cheklov: `limit` marta / `windowMs` ichida. */
+export const createThrottle = (limit: number, windowMs: number) => {
+	let hits: number[] = []
+	return (): boolean => {
+		const now = Date.now()
+		hits = hits.filter(t => now - t < windowMs)
+		if (hits.length >= limit) return false
+		hits.push(now)
+		return true
+	}
 }

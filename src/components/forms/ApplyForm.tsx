@@ -6,6 +6,7 @@ import { ArrowRight, Lock } from 'lucide-react'
 import { useMemo, useRef, useState, type FormEvent } from 'react'
 import { Field, inputCls } from './Field'
 import { SuccessModal } from './SuccessModal'
+import { useSearchParams } from 'react-router-dom'
 
 type Errors = Partial<
 	Record<'name' | 'phone' | 'product' | 'consent' | 'form', string>
@@ -13,9 +14,15 @@ type Errors = Partial<
 const throttle = createThrottle(3, 60_000)
 
 export function ApplyForm({ quick = false }: { quick?: boolean }) {
-	const { t, lang } = useI18n()
-	const [product, setProduct] = useState('')
-	const [plan, setPlan] = useState<'std' | 'pro'>('std')
+		const { t, lang } = useI18n()
+		const [params] = useSearchParams()
+		const initial = params.get('product') ?? ''
+		const [product, setProduct] = useState(
+			products.some(p => p.id === initial) ? initial : '',
+		)
+		const [plan, setPlan] = useState<'std' | 'pro'>(
+			params.get('plan') === 'pro' ? 'pro' : 'std',
+		)
 	const [payment, setPayment] = useState<'once' | 'rent'>('once')
 	const [errors, setErrors] = useState<Errors>({})
 	const [busy, setBusy] = useState(false)
