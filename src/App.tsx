@@ -3,6 +3,7 @@ import { Layout } from '@/components/layout/Layout'
 import HomePage from '@/app/HomePage'
 import ComingSoon from '@/app/ComingSoon'
 import ProductsPage from '@/app/ProductsPage'
+import ProductDetailPage from '@/app/ProductDetailPage'
 import ApplyPage from '@/app/ApplyPage'
 import ContactPage from '@/app/ContactPage'
 import AboutPage from '@/app/AboutPage'
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
 		children: [
 			{ path: '/', element: <HomePage /> },
 			{ path: '/products', element: <ProductsPage /> },
+			{ path: '/products/:id', element: <ProductDetailPage /> },
 			{ path: '/solutions', element: <ProductsPage /> },
 			{ path: '/apply', element: <ApplyPage /> },
 			{ path: '/contact', element: <ContactPage /> },

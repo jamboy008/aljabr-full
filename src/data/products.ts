@@ -28,14 +28,14 @@ export const products: Product[] = [
 ]
 
 export const proPrice: Record<string, number | null> = {
-	crm: 6_000_000,
-	erp: 15_000_000,
-	shop: 4_000_000,
-	web: 2_500_000,
-	mobile: 8_000_000,
-	bot: 1_000_000,
-	mini: 4_000_000,
-	ai: 3_000_000,
+	crm: 15_000_000,
+	erp: 35_000_000,
+	shop: 10_000_000,
+	web: 6_000_000,
+	mobile: 20_000_000,
+	bot: 3_000_000,
+	mini: 10_000_000,
+	ai: 10_000_000,
 }
 export const groups: Record<string, string[]> = {
   sys: ['crm', 'erp'], web: ['shop', 'web'], mob: ['mobile', 'bot', 'mini'], ai: ['ai'],
